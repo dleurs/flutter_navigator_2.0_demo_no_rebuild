@@ -43,14 +43,14 @@ class MyRouteInformationParser extends RouteInformationParser<AppState> {
   }
 
   @override
-  RouteInformation restoreRouteInformation(AppState path) {
-    if (path.isUnknown) {
+  RouteInformation restoreRouteInformation(AppState state) {
+    if (state.isUnknown) {
       return RouteInformation(location: '/404');
     }
-    if (path.isFirstPage) {
-      return RouteInformation(location: '/');
+    if (state.isFirstPage) {
+      return RouteInformation(location: '/first');
     }
-    if (path.isSecondPage) {
+    if (state.isSecondPage) {
       return RouteInformation(location: '/second');
     }
     return null;
@@ -61,7 +61,7 @@ class MyRouterDelegate extends RouterDelegate<AppState>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<AppState> {
   final GlobalKey<NavigatorState> navigatorKey;
 
-  AppState currentState;
+  AppState currentState = AppState.unknown();
 
   MyRouterDelegate() : navigatorKey = GlobalKey<NavigatorState>();
 
@@ -83,7 +83,6 @@ class MyRouterDelegate extends RouterDelegate<AppState>
     if (currentState == null || currentState.isUnknown) {
       pages.add(
           MaterialPage(key: ValueKey('UnknownPage'), child: UnknownScreen()));
-      return pages;
     } else if (currentState.isSecondPage) {
       // Must be at the end in order to show NavBar back button when 404
       pages.add(
