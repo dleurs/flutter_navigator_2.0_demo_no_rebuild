@@ -23,29 +23,29 @@ jobs:
     - run: flutter build web --release
     - run: pwd
     - run: ls
-      working-directory: /home/runner/work/Flutter-Navigator-2.0-demo-with-Authentication-mecanism/Flutter-Navigator-2.0-demo-with-Authentication-mecanism/build/web
+      working-directory: /home/runner/work/flutter_navigator_2.0_step_1/flutter_navigator_2.0_step_1/build/web
     
     # Bug https://github.com/flutter/flutter/issues/69287
     - run: cat index.html
-      working-directory: /home/runner/work/Flutter-Navigator-2.0-demo-with-Authentication-mecanism/Flutter-Navigator-2.0-demo-with-Authentication-mecanism/build/web
+      working-directory: /home/runner/work/flutter_navigator_2.0_step_1/flutter_navigator_2.0_step_1/build/web
     - run: sed -i '/base href/d' index.html #For MacOS : sed -i '' '/base href/d' index.html
-      working-directory: /home/runner/work/Flutter-Navigator-2.0-demo-with-Authentication-mecanism/Flutter-Navigator-2.0-demo-with-Authentication-mecanism/build/web
+      working-directory: /home/runner/work/flutter_navigator_2.0_step_1/flutter_navigator_2.0_step_1/build/web
     - run: cat index.html
-      working-directory: /home/runner/work/Flutter-Navigator-2.0-demo-with-Authentication-mecanism/Flutter-Navigator-2.0-demo-with-Authentication-mecanism/build/web
+      working-directory: /home/runner/work/flutter_navigator_2.0_step_1/flutter_navigator_2.0_step_1/build/web
 
     - run: git init
-      working-directory: /home/runner/work/Flutter-Navigator-2.0-demo-with-Authentication-mecanism/Flutter-Navigator-2.0-demo-with-Authentication-mecanism/build/web
+      working-directory: /home/runner/work/flutter_navigator_2.0_step_1/flutter_navigator_2.0_step_1/build/web
     - run: git config user.name  "CI"
-      working-directory: /home/runner/work/Flutter-Navigator-2.0-demo-with-Authentication-mecanism/Flutter-Navigator-2.0-demo-with-Authentication-mecanism/build/web
+      working-directory: /home/runner/work/flutter_navigator_2.0_step_1/flutter_navigator_2.0_step_1/build/web
     - run: git config user.email "flutter-ci@github.com"
-      working-directory: /home/runner/work/Flutter-Navigator-2.0-demo-with-Authentication-mecanism/Flutter-Navigator-2.0-demo-with-Authentication-mecanism/build/web
-    - run: git remote add secure-origin https://${{ secrets.ACCESS_TOKEN }}@github.com/dleurs/Flutter-Navigator-2.0-demo-with-Authentication-mecanism.git
-      working-directory: /home/runner/work/Flutter-Navigator-2.0-demo-with-Authentication-mecanism/Flutter-Navigator-2.0-demo-with-Authentication-mecanism/build/web
+      working-directory: /home/runner/work/flutter_navigator_2.0_step_1/flutter_navigator_2.0_step_1/build/web
+    - run: git remote add secure-origin https://${{ secrets.ACCESS_TOKEN }}@github.com/dleurs/flutter_navigator_2.0_step_1.git
+      working-directory: /home/runner/work/flutter_navigator_2.0_step_1/flutter_navigator_2.0_step_1/build/web
     - run: git checkout -b gh-pages
-      working-directory: /home/runner/work/Flutter-Navigator-2.0-demo-with-Authentication-mecanism/Flutter-Navigator-2.0-demo-with-Authentication-mecanism/build/web
+      working-directory: /home/runner/work/flutter_navigator_2.0_step_1/flutter_navigator_2.0_step_1/build/web
     - run: git add .
-      working-directory: /home/runner/work/Flutter-Navigator-2.0-demo-with-Authentication-mecanism/Flutter-Navigator-2.0-demo-with-Authentication-mecanism/build/web
+      working-directory: /home/runner/work/flutter_navigator_2.0_step_1/flutter_navigator_2.0_step_1/build/web
     - run: git commit -m "Updated docs" --allow-empty
-      working-directory: /home/runner/work/Flutter-Navigator-2.0-demo-with-Authentication-mecanism/Flutter-Navigator-2.0-demo-with-Authentication-mecanism/build/web
+      working-directory: /home/runner/work/flutter_navigator_2.0_step_1/flutter_navigator_2.0_step_1/build/web
     - run: git push --force secure-origin gh-pages
-      working-directory: /home/runner/work/Flutter-Navigator-2.0-demo-with-Authentication-mecanism/Flutter-Navigator-2.0-demo-with-Authentication-mecanism/build/web
+      working-directory: /home/runner/work/flutter_navigator_2.0_step_1/flutter_navigator_2.0_step_1/build/web

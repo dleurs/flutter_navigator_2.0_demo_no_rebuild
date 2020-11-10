@@ -96,7 +96,7 @@ class MyRouterDelegate extends RouterDelegate<AppState>
 
   @override
   Widget build(BuildContext context) {
-    print("BookRouterDelegate building...");
+    print("MyRouterDelegate building...");
     print(this.currentState);
     return Navigator(
       key: navigatorKey,
