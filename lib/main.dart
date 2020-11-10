@@ -71,13 +71,7 @@ class MyRouterDelegate extends RouterDelegate<AppState>
 
   List<Page<dynamic>> buildPage() {
     List<Page<dynamic>> pages = [];
-
-    if (currentState == null || currentState.isUnknown) {
-      pages.add(
-          MaterialPage(key: ValueKey('UnknownPage'), child: UnknownScreen()));
-      return pages;
-    }
-
+    // is shown even when currentState == null
     pages.add(
       MaterialPage(
         key: ValueKey('FirstPage'),
@@ -86,7 +80,12 @@ class MyRouterDelegate extends RouterDelegate<AppState>
         ),
       ),
     );
-    if (currentState.isSecondPage) {
+    if (currentState == null || currentState.isUnknown) {
+      pages.add(
+          MaterialPage(key: ValueKey('UnknownPage'), child: UnknownScreen()));
+      return pages;
+    } else if (currentState.isSecondPage) {
+      // Must be at the end in order to show NavBar back button when 404
       pages.add(
           MaterialPage(key: ValueKey('SecondPage'), child: SecondScreen()));
     }
@@ -149,20 +148,20 @@ class AppState {
 
   @override
   String toString() {
-    String str = "currentState{";
+    String str = "currentState{ ";
     if (this == null) {
-      return str + "null}";
+      return str + "null }";
     }
     if (isUnknown) {
-      str += " isUnknown ";
+      str += "isUnknown";
     } else {
       if (isFirstPage) {
-        str += " firstPage ";
+        str += "firstPage";
       } else {
-        str += " secondPage ";
+        str += "secondPage";
       }
     }
-    str += "}";
+    str += " }";
     return str;
   }
 }
@@ -178,19 +177,24 @@ class FirstScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Column(
-        children: [
-          Text(
-            "First screen",
-            style: Theme.of(context).textTheme.headline4,
-          ),
-          RaisedButton(
-            onPressed: () {
-              onTapped(null);
-            },
-            child: Text("Show second page"),
-          )
-        ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "First screen",
+              style: Theme.of(context).textTheme.headline4,
+            ),
+            RaisedButton(
+              onPressed: () {
+                onTapped(null);
+              },
+              child: Text(
+                "Show second page",
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -218,7 +222,7 @@ class UnknownScreen extends StatelessWidget {
       appBar: AppBar(),
       body: Center(
         child: Text(
-          "404!",
+          "Page not found",
           style: Theme.of(context).textTheme.headline4,
         ),
       ),
