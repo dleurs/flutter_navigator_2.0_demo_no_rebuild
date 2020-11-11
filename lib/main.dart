@@ -48,7 +48,7 @@ class MyRouteInformationParser extends RouteInformationParser<AppState> {
       return RouteInformation(location: '/404');
     }
     if (state.isFirstPage) {
-      return RouteInformation(location: '/first');
+      return RouteInformation(location: '/');
     }
     if (state.isSecondPage) {
       return RouteInformation(location: '/second');
@@ -61,7 +61,7 @@ class MyRouterDelegate extends RouterDelegate<AppState>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<AppState> {
   final GlobalKey<NavigatorState> navigatorKey;
 
-  AppState currentState = AppState.unknown();
+  AppState currentState = AppState.firstPage();
 
   MyRouterDelegate() : navigatorKey = GlobalKey<NavigatorState>();
 
