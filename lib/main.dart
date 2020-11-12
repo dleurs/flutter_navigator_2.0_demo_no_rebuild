@@ -75,9 +75,7 @@ class MyRouterDelegate extends RouterDelegate<AppState>
     pages.add(
       MaterialPage(
         key: ValueKey('FirstPage'),
-        child: FirstScreen(
-          onTapped: _handleTapped,
-        ),
+        child: FirstScreen(),
       ),
     );
     if (currentState == null || currentState.isUnknown) {
@@ -166,12 +164,6 @@ class AppState {
 }
 
 class FirstScreen extends StatelessWidget {
-  final ValueChanged onTapped;
-
-  FirstScreen({
-    @required this.onTapped,
-  });
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -186,7 +178,8 @@ class FirstScreen extends StatelessWidget {
             ),
             RaisedButton(
               onPressed: () {
-                onTapped(null);
+                (Router.of(context).routerDelegate as MyRouterDelegate)
+                    ._handleTapped(null);
               },
               child: Text(
                 "Show second page",
