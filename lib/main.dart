@@ -23,27 +23,27 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-class MyRouteInformationParser extends RouteInformationParser<AppState> {
+class MyRouteInformationParser extends RouteInformationParser<AppConfig> {
   @override
-  Future<AppState> parseRouteInformation(
+  Future<AppConfig> parseRouteInformation(
       RouteInformation routeInformation) async {
     final uri = Uri.parse(routeInformation.location);
     // Handle '/'
     if (uri.pathSegments.length == 0) {
-      return AppState.firstPage();
+      return AppConfig.firstPage();
     }
 
     // Handle '/second'
     if (uri.pathSegments.length == 1) {
-      if (uri.pathSegments[0] == 'second') return AppState.secondPage();
+      if (uri.pathSegments[0] == 'second') return AppConfig.secondPage();
     }
 
     // Handle unknown routes
-    return AppState.unknown();
+    return AppConfig.unknown();
   }
 
   @override
-  RouteInformation restoreRouteInformation(AppState state) {
+  RouteInformation restoreRouteInformation(AppConfig state) {
     if (state.isUnknown) {
       return RouteInformation(location: '/404');
     }
@@ -57,15 +57,15 @@ class MyRouteInformationParser extends RouteInformationParser<AppState> {
   }
 }
 
-class MyRouterDelegate extends RouterDelegate<AppState>
-    with ChangeNotifier, PopNavigatorRouterDelegateMixin<AppState> {
+class MyRouterDelegate extends RouterDelegate<AppConfig>
+    with ChangeNotifier, PopNavigatorRouterDelegateMixin<AppConfig> {
   final GlobalKey<NavigatorState> navigatorKey;
 
-  AppState currentState = AppState.firstPage();
+  AppConfig currentState = AppConfig.firstPage();
 
   MyRouterDelegate() : navigatorKey = GlobalKey<NavigatorState>();
 
-  AppState get currentConfiguration {
+  AppConfig get currentConfiguration {
     return currentState;
   }
 
@@ -101,7 +101,7 @@ class MyRouterDelegate extends RouterDelegate<AppState>
         if (!route.didPop(result)) {
           return false;
         }
-        currentState = AppState.firstPage();
+        currentState = AppConfig.firstPage();
         notifyListeners();
 
         return true;
@@ -110,30 +110,30 @@ class MyRouterDelegate extends RouterDelegate<AppState>
   }
 
   @override
-  Future<void> setNewRoutePath(AppState newState) async {
+  Future<void> setNewRoutePath(AppConfig newState) async {
     currentState = newState;
     return;
   }
 
   void _handleTapped(void nothing) {
-    currentState = AppState.secondPage();
+    currentState = AppConfig.secondPage();
     notifyListeners();
   }
 }
 
-class AppState {
+class AppConfig {
   final bool showSecondPage;
   final bool unknown;
 
-  AppState.firstPage()
+  AppConfig.firstPage()
       : showSecondPage = false,
         unknown = false;
 
-  AppState.secondPage()
+  AppConfig.secondPage()
       : showSecondPage = true,
         unknown = false;
 
-  AppState.unknown()
+  AppConfig.unknown()
       : showSecondPage = false,
         unknown = true;
 
