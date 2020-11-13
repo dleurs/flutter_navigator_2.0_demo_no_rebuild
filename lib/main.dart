@@ -198,9 +198,20 @@ class SecondScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(),
       body: Center(
-        child: Text(
-          "Second screen",
-          style: Theme.of(context).textTheme.headline4,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Second screen",
+              style: Theme.of(context).textTheme.headline4,
+            ),
+            RaisedButton(
+              onPressed: () => Navigator.pop(context, true),
+              child: Text(
+                "Result with true via Navigator.pop",
+              ),
+            ),
+          ],
         ),
       ),
     );

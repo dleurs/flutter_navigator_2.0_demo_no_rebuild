@@ -32,6 +32,7 @@
 - https://www.youtube.com/watch?v=FBoAXUkHu44
 - https://docs.google.com/document/d/1Q0jx0l4-xymph9O6zLaOY4d_f7YFpNWX_eGbzYxr9wY/edit
 - https://github.com/flutter/flutter/issues/45938
+- https://github.com/orestesgaolin/navigator_20_example
 
 ## Flutter Web to Github Pages
 
