@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_navigation/navigation/app_config.dart';
-import 'package:new_navigation/screens/first_screen.dart';
-import 'package:new_navigation/screens/second_screen.dart';
+import 'package:new_navigation/screens/home_screen.dart';
+import 'package:new_navigation/screens/todos_screen.dart';
 import 'package:new_navigation/screens/unknown_screen.dart';
 
 class MyRouteInformationParser extends RouteInformationParser<AppConfig> {
@@ -11,16 +11,26 @@ class MyRouteInformationParser extends RouteInformationParser<AppConfig> {
     final uri = Uri.parse(routeInformation.location);
     // Handle '/'
     if (uri.pathSegments.length == 0) {
-      return FirstScreen.appConfig;
+      return HomeScreen.getConfig();
     }
-    // Handle '/second'
+    // Handle '/todo'
     if (uri.pathSegments.length == 1) {
-      if (uri.pathSegments[0] == SecondScreen.appConfig.url[0])
-        return SecondScreen.appConfig;
+      if (uri.pathSegments[0] == TodosScreen.getConfig().url[0]) {
+        return TodosScreen.getConfig();
+      }
     }
 
+    // Handle '/todo/:id'
+    if (uri.pathSegments.length == 2) {
+      if (uri.pathSegments[0] == TodosScreen.getConfig().url[0]) {
+        int todoId = int.tryParse(uri.pathSegments[1]);
+        if (todoId != null) {
+          return TodosScreen.getConfig();
+        }
+      }
+    }
     // Handle unknown routes
-    return UnknownScreen.appConfig;
+    return UnknownScreen.getConfig();
   }
 
   @override

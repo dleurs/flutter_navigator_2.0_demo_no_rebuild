@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:new_navigation/models/todo.dart';
 import 'package:new_navigation/navigation/app_config.dart';
-import 'package:new_navigation/screens/first_screen.dart';
 
-class SecondScreen extends StatelessWidget {
-  static AppConfig appConfig = AppConfig(url: <String>["second"]);
+class TodoDetailsScreen extends StatelessWidget {
+  final Todo todo;
+
+  TodoDetailsScreen({@required this.todo});
+
+  AppConfig getConfig() {
+    return AppConfig(
+        url: <String>["todo", todo.id.toString()], selectedTodo: todo);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +21,7 @@ class SecondScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "Second screen",
+              todo.name,
               style: Theme.of(context).textTheme.headline4,
             ),
           ],

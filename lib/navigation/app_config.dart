@@ -1,10 +1,13 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:new_navigation/models/todo.dart';
 
 class AppConfig extends Equatable {
   final List<String> url;
+  final List<Todo> todos;
+  final Todo selectedTodo;
 
-  AppConfig({@required this.url});
+  AppConfig({@required this.url, this.todos, this.selectedTodo});
 
   @override
   String toString() {
@@ -22,5 +25,5 @@ class AppConfig extends Equatable {
   }
 
   @override
-  List<Object> get props => [url];
+  List<Object> get props => [url, selectedTodo];
 }

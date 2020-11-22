@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:new_navigation/navigation/app_config.dart';
 
 class UnknownScreen extends StatelessWidget {
-  static AppConfig appConfig = AppConfig(url: null);
+  static AppConfig getConfig() {
+    return AppConfig(url: null);
+  }
 
   @override
   Widget build(BuildContext context) {

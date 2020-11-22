@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:new_navigation/navigation/app_config.dart';
 import 'package:new_navigation/navigation/router_delegate.dart';
 
-class FirstScreen extends StatelessWidget {
-  static AppConfig appConfig = AppConfig(url: <String>[]);
+class HomeScreen extends StatelessWidget {
+  HomeScreen();
+
+  static AppConfig getConfig() {
+    return AppConfig(url: <String>[]);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,16 +18,18 @@ class FirstScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "First screen",
+              "Hello World",
               style: Theme.of(context).textTheme.headline4,
             ),
+            SizedBox(height: 50),
             RaisedButton(
               onPressed: () {
                 (Router.of(context).routerDelegate as MyRouterDelegate)
-                    .toSecondScreen(null);
+                    .toTodosScreen();
               },
               child: Text(
-                "Show second page",
+                "Todo lists",
+                style: Theme.of(context).textTheme.headline5,
               ),
             )
           ],
