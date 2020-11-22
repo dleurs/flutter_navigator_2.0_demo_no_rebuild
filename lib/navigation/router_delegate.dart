@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:new_navigation/models/todo.dart';
 import 'package:new_navigation/navigation/app_config.dart';
-import 'package:new_navigation/screens/home_screen.dart';
+import 'package:new_navigation/navigation/route_page_manager.dart';
 import 'package:new_navigation/screens/todos_screen.dart';
 import 'package:new_navigation/screens/todo_details_screen.dart';
-import 'package:new_navigation/screens/unknown_screen.dart';
+import 'package:provider/provider.dart';
 
 class MyRouterDelegate extends RouterDelegate<AppConfig>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<AppConfig> {
@@ -24,12 +24,12 @@ class MyRouterDelegate extends RouterDelegate<AppConfig>
     Todo(name: "Cook pelmenis", id: 3),
   ];
 
-  List<Page<dynamic>> buildPage() {
+  /* List<Page<dynamic>> buildPage() {
     List<Page<dynamic>> pages = [];
     // is shown even when currentState == null
     pages.add(
       MaterialPage(
-        key: UniqueKey(),
+        key: ValueKey(HomeScreen.getConfig().hashCode),
         child: HomeScreen(),
       ),
     );
@@ -59,13 +59,29 @@ class MyRouterDelegate extends RouterDelegate<AppConfig>
       }
     }
     return pages;
-  }
+   }*/
+
+  final RoutePageManager pageManager = RoutePageManager();
 
   @override
   Widget build(BuildContext context) {
     print("MyRouterDelegate building...");
-    print(this.currentConfig);
-    return Navigator(
+    //print(this.currentConfig);
+
+    return ChangeNotifierProvider<RoutePageManager>.value(
+      value: pageManager,
+      child: Consumer<RoutePageManager>(
+        builder: (context, pageManager, child) {
+          return Navigator(
+            key: navigatorKey,
+            onPopPage: _onPopPage,
+            pages: List.of(pageManager.pages),
+          );
+        },
+      ),
+    );
+
+    /* Navigator(
       key: navigatorKey,
       pages: buildPage(),
       onPopPage: (route, result) {
@@ -79,12 +95,21 @@ class MyRouterDelegate extends RouterDelegate<AppConfig>
 
         return true;
       },
-    );
+    ); */
+  }
+
+  bool _onPopPage(Route<dynamic> route, dynamic result) {
+    final didPop = route.didPop(result);
+    if (!didPop) {
+      return false;
+    }
+    pageManager.didPop(route.settings);
+    return true;
   }
 
   @override
-  Future<void> setNewRoutePath(AppConfig newState) async {
-    currentConfig = newState;
+  Future<void> setNewRoutePath(AppConfig newConf) async {
+    await pageManager.setNewRoutePath(newConf);
     return;
   }
 
