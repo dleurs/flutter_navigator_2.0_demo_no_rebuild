@@ -1,5 +1,11 @@
 # Flutter Navigator 2.0 simplest implementation
+
+<a href="https://dleurs.github.io/flutter_navigator_2.0_no_rebuild/">Try online</a>
 ![](assets/gif_app_3.gif)
+
+A Flutter Navigator 2.0 project inspired from <a href="https://github.com/orestesgaolin/navigator_20_example">orestesgaolin's git</a> and <a href="https://medium.com/flutter/learning-flutters-new-navigation-and-routing-system-7c9068155ade">John Ryan's Medium</a><a href="https://docs.google.com/document/d/1Q0jx0l4-xymph9O6zLaOY4d_f7YFpNWX_eGbzYxr9wY/edit">.</a><br/>
+However here, the app does not rebuild pages that are below frontpage.<br/>
+If poped, page will be dropped.
 
 ## Flutter Nav functions/files overview
 ![](assets/0_architecture.png)

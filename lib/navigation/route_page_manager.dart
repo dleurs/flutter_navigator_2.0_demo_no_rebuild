@@ -59,7 +59,7 @@ class RoutePageManager extends ChangeNotifier {
             MaterialPage(
               child: HomeScreen(),
               key: ValueKey(HomeScreen.getConfig().hashCode),
-              name: '/',
+              name: HomeScreen.getConfig().uri.path,
             ),
           );
         } else {
