@@ -42,14 +42,13 @@ class RoutePageManager extends ChangeNotifier {
   ];
 
   Future<void> setNewRoutePath(AppConfig config) async {
-    print("setNewRoutePath");
-
-    print("pagesKeysRequired()");
+    //print("setNewRoutePath");
+    //print("pagesKeysRequired()");
     List<Key> widgetToBuild = pagesKeysRequired(appConfig: config);
-    print(widgetToBuild.toString());
+    //print(widgetToBuild.toString());
 
-    print("Begin pagesKeys()");
-    print(pagesKeys().toString());
+    //print("Begin pagesKeys()");
+    //print(pagesKeys().toString());
 
     // First Page, Handle "/" HomeScreen
     if (widgetToBuild.length >= 1) {
@@ -126,83 +125,9 @@ class RoutePageManager extends ChangeNotifier {
     while (_pages.length > widgetToBuild.length) {
       _pages.removeLast();
     }
-
-    print("End pagesKeys()");
-    print(pagesKeys().toString());
-
-    /*     // Second Page, Handle "/todo" TodosScreen
-    if (widgetToBuild.length >= 3) {
-      if (_pages[1].key != widgetToBuild[1]) {
-        _pages.insert(
-          1,
-         MaterialPage(
-              key: ValueKey(TodosScreen.getConfig().hashCode),
-              child: TodosScreen(),
-              name: TodosScreen.getConfig().uri.path),
-        );
-      }
-    }
-
-    // Handle "/todo" or "/unknown"
-    else if (config.uri.pathSegments.length == 1) {
-      if (config.uri.pathSegments[0] ==
-          TodosScreen.getConfig().uri.pathSegments[0]) {
-        //_pages.add(
-          MaterialPage(
-              key: ValueKey(TodosScreen.getConfig().hashCode),
-              child: TodosScreen(),
-              name: TodosScreen.getConfig().uri.path),
-        );
-      } else if (config.uri.pathSegments[0] ==
-          UnknownScreen.getConfig().uri.pathSegments[0]) {
-        //_pages.add(
-        checkAndAddToPage(MaterialPage(
-            key: ValueKey(UnknownScreen.getConfig.hashCode),
-            child: UnknownScreen(),
-            name: UnknownScreen.getConfig().uri.path));
-      }
-    }
-
-    // Handle "/todo/:id"
-    else if (config.uri.pathSegments.length == 2) {
-      if (config.uri.pathSegments[0] ==
-          TodosScreen.getConfig().uri.pathSegments[0]) {
-        print("Key TodoDetailsScreen ${config.uri.pathSegments[1]}: " +
-            ValueKey(TodoDetailsScreen(todo: config.selectedTodo)
-                    .getConfig()
-                    .hashCode)
-                .toString());
-        //_pages.add(
-        checkAndAddToPage(
-          MaterialPage(
-              key: ValueKey(TodoDetailsScreen(todo: config.selectedTodo)
-                  .getConfig()
-                  .hashCode),
-              child: TodoDetailsScreen(todo: config.selectedTodo),
-              name: TodoDetailsScreen(todo: config.selectedTodo)
-                  .getConfig()
-                  .uri
-                  .path),
-        );
-      }
-    } */
-
     notifyListeners();
     return;
   }
-
-/*   bool isKeyAlreadyUsed(Key keyToAdd) {
-    for (final Page<dynamic> page in _pages) {
-      final LocalKey key = page.key;
-      if (key != null) {
-        if (key == keyToAdd) {
-          _pages.remove(_pages.length - 1);
-          return true;
-        }
-      }
-    }
-    return false;
-  } */
 
   List<Key> pagesKeysRequired({@required AppConfig appConfig}) {
     List<Key> keys = <Key>[ValueKey(appConfig.hashCode)];
@@ -226,12 +151,6 @@ class RoutePageManager extends ChangeNotifier {
     }
     return keys;
   }
-
-/*   void checkAndAddToPage(Page pageToAdd) {
-    if (!isKeyAlreadyUsed(pageToAdd.key)) {
-      _pages.add(pageToAdd);
-    }
-  } */
 
   void openTodosScreen() {
     setNewRoutePath(TodosScreen.getConfig());

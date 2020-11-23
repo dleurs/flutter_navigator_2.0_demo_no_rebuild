@@ -23,7 +23,7 @@ class TodoDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("Building TodoDetailsScreen ${todo.id.toString()}");
+    print("[Build] Building TodoDetailsScreen ${todo.id.toString()}");
     return Scaffold(
       appBar: AppBar(),
       body: Center(

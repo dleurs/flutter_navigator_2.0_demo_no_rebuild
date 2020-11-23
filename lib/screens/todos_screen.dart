@@ -18,7 +18,7 @@ class TodosScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("Building TodosScreen");
+    print("[Build] Building TodosScreen");
     return Scaffold(
       appBar: AppBar(),
       body: ListView.builder(

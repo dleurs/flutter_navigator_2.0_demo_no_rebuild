@@ -1,5 +1,5 @@
 # Flutter Navigator 2.0 simplest implementation
-![](assets/gif_app_2.gif)
+![](assets/gif_app_3.gif)
 
 ## Flutter Nav functions/files overview
 ![](assets/0_architecture.png)

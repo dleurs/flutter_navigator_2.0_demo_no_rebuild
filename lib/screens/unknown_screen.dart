@@ -10,7 +10,7 @@ class UnknownScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("Building UnknownScreen");
+    print("[Build] Building UnknownScreen");
     return Scaffold(
       appBar: AppBar(),
       body: Center(
