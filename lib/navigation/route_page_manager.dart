@@ -20,8 +20,7 @@ class RoutePageManager extends ChangeNotifier {
     ),
   ];
 
-  final _navigatorKey = GlobalKey<NavigatorState>();
-  GlobalKey<NavigatorState> get navigatorKey => _navigatorKey;
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   void didPop(Page page) {
     _pages.remove(page);
@@ -53,6 +52,7 @@ class RoutePageManager extends ChangeNotifier {
 
     // Handle "/"
     else if (config.uri.pathSegments.length == 0) {
+      print("Key HomeScreen: " + (HomeScreen.getConfig().hashCode).toString());
       _pages.removeWhere(
         (element) =>
             element
@@ -85,6 +85,11 @@ class RoutePageManager extends ChangeNotifier {
     else if (config.uri.pathSegments.length == 2) {
       if (config.uri.pathSegments[0] ==
           TodosScreen.getConfig().uri.pathSegments[0]) {
+        print("Key TodoDetailsScreen ${config.uri.pathSegments[1]}: " +
+            ValueKey(TodoDetailsScreen(todo: config.selectedTodo)
+                    .getConfig()
+                    .hashCode)
+                .toString());
         _pages.add(
           MaterialPage(
               key: ValueKey(TodoDetailsScreen(todo: config.selectedTodo)

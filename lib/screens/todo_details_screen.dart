@@ -5,7 +5,7 @@ import 'package:new_navigation/navigation/app_config.dart';
 class TodoDetailsScreen extends StatelessWidget {
   final Todo todo;
 
-  TodoDetailsScreen({@required this.todo});
+  TodoDetailsScreen({Key key, @required this.todo}) : super(key: key);
 
   AppConfig getConfig() {
     return AppConfig(
