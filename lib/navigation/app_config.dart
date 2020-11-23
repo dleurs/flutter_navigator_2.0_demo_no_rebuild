@@ -8,10 +8,11 @@ import 'package:new_navigation/screens/unknown_screen.dart';
 
 class AppConfig extends Equatable {
   final Uri uri;
-  //final List<Todo> todos;
+  final AppConfig widgetBelow;
   final Todo selectedTodo;
 
-  AppConfig({@required this.uri, /* this.todos, */ this.selectedTodo});
+  AppConfig(
+      {@required this.uri, @required this.widgetBelow, this.selectedTodo});
 
   @override
   String toString() {
@@ -30,6 +31,7 @@ class AppConfig extends Equatable {
 
   @override
   List<Object> get props => [uri, selectedTodo];
+  // widgetBelow should not be inside props
 }
 
 AppConfig parseRoute(Uri uri) {

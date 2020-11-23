@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:new_navigation/navigation/app_config.dart';
-import 'package:new_navigation/navigation/router_delegate.dart';
-import 'package:new_navigation/screens/todos_screen.dart';
 import 'package:new_navigation/navigation/route_page_manager.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen();
 
   static AppConfig getConfig() {
-    return AppConfig(uri: Uri(path: "/"));
+    return AppConfig(uri: Uri(path: "/"), widgetBelow: null);
   }
 
   @override
   Widget build(BuildContext context) {
+    print("Building HomeScreen");
     return Scaffold(
       appBar: AppBar(),
       body: Center(

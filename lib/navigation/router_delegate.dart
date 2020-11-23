@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:new_navigation/models/todo.dart';
 import 'package:new_navigation/navigation/app_config.dart';
 import 'package:new_navigation/navigation/route_page_manager.dart';
-import 'package:new_navigation/screens/home_screen.dart';
-import 'package:new_navigation/screens/todos_screen.dart';
-import 'package:new_navigation/screens/todo_details_screen.dart';
 import 'package:provider/provider.dart';
 
 class MyRouterDelegate extends RouterDelegate<AppConfig>
