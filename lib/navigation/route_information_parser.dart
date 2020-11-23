@@ -9,42 +9,27 @@ class MyRouteInformationParser extends RouteInformationParser<AppConfig> {
   Future<AppConfig> parseRouteInformation(
       RouteInformation routeInformation) async {
     final uri = Uri.parse(routeInformation.location);
-    // Handle '/'
-    if (uri.pathSegments.length == 0) {
-      return HomeScreen.getConfig();
-    }
-    // Handle '/todo'
-    if (uri.pathSegments.length == 1) {
-      if (uri.pathSegments[0] == TodosScreen.getConfig().url[0]) {
-        return TodosScreen.getConfig();
-      }
-    }
-
-    // Handle '/todo/:id'
-    if (uri.pathSegments.length == 2) {
-      if (uri.pathSegments[0] == TodosScreen.getConfig().url[0]) {
-        int todoId = int.tryParse(uri.pathSegments[1]);
-        if (todoId != null) {
-          return TodosScreen.getConfig();
-        }
-      }
-    }
-    // Handle unknown routes
-    return UnknownScreen.getConfig();
+    return parseRoute(uri);
   }
 
   @override
   RouteInformation restoreRouteInformation(AppConfig state) {
-    if (state.url == null) {
+    if (state == UnknownScreen.getConfig()) {
       return RouteInformation(location: "/unknown");
     }
-    if (state.url.isEmpty) {
+    if (state == HomeScreen.getConfig()) {
       return RouteInformation(location: "/");
     }
-    String urlWithSlash = "";
-    for (String urlSection in state.url) {
-      urlWithSlash += "/" + urlSection;
+    if (state == TodosScreen.getConfig()) {
+      return RouteInformation(location: "/todo");
     }
-    return RouteInformation(location: urlWithSlash);
+    // if(state == TodoDetailsScreen(todos:null).getConfig())
+    if (state.uri.pathSegments.length == 2 &&
+        state.uri.pathSegments[0] ==
+            TodosScreen.getConfig().uri.pathSegments[0]) {
+      String id = state.selectedTodo.id.toString();
+      return RouteInformation(location: "/todo/$id");
+    }
+    return null;
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_navigation/models/todo.dart';
 import 'package:new_navigation/navigation/app_config.dart';
+import 'package:new_navigation/navigation/route_page_manager.dart';
 import 'package:new_navigation/navigation/router_delegate.dart';
 
 class TodosScreen extends StatelessWidget {
@@ -9,7 +10,7 @@ class TodosScreen extends StatelessWidget {
   TodosScreen({@required this.todos});
 
   static AppConfig getConfig() {
-    return AppConfig(url: <String>["todo"]);
+    return AppConfig(uri: Uri(path: "/todo"));
   }
 
   @override
@@ -24,8 +25,8 @@ class TodosScreen extends StatelessWidget {
                 title: Text(todo.name),
                 subtitle: Text(todo.id.toString()),
                 onTap: () {
-                  (Router.of(context).routerDelegate as MyRouterDelegate)
-                      .toTodoDetailsScreen(todo: todo);
+                  RoutePageManager.of(context)
+                      .openTodoDetailsScreen(todo: todo);
                 });
           }),
     );

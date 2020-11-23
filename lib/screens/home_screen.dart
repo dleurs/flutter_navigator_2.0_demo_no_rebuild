@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:new_navigation/navigation/app_config.dart';
 import 'package:new_navigation/navigation/router_delegate.dart';
+import 'package:new_navigation/screens/todos_screen.dart';
+import 'package:new_navigation/navigation/route_page_manager.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen();
 
   static AppConfig getConfig() {
-    return AppConfig(url: <String>[]);
+    return AppConfig(uri: Uri(path: "/"));
   }
 
   @override
@@ -24,8 +26,7 @@ class HomeScreen extends StatelessWidget {
             SizedBox(height: 50),
             RaisedButton(
               onPressed: () {
-                (Router.of(context).routerDelegate as MyRouterDelegate)
-                    .toTodosScreen();
+                RoutePageManager.of(context).openTodosScreen();
               },
               child: Text(
                 "Todo lists",

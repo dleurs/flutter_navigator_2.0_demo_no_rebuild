@@ -3,7 +3,7 @@ import 'package:new_navigation/navigation/app_config.dart';
 
 class UnknownScreen extends StatelessWidget {
   static AppConfig getConfig() {
-    return AppConfig(url: null);
+    return AppConfig(uri: Uri(path: "/unknown"));
   }
 
   @override

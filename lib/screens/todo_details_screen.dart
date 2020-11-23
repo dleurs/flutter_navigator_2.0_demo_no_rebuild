@@ -9,7 +9,7 @@ class TodoDetailsScreen extends StatelessWidget {
 
   AppConfig getConfig() {
     return AppConfig(
-        url: <String>["todo", todo.id.toString()], selectedTodo: todo);
+        uri: Uri(path: "/todo/${todo.id.toString()}"), selectedTodo: todo);
   }
 
   @override
