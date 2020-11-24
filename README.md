@@ -1,6 +1,6 @@
-# Flutter Navigator 2.0 simplest implementation
+# Flutter Navigator 2.0 demo, with no unesseray rebuild
 
-<a href="https://dleurs.github.io/flutter_navigator_2.0_no_rebuild/">Try online</a>
+<a href="https://dleurs.github.io/flutter_navigator_2.0_no_rebuild/">Try online</a><br/><br/>
 ![](assets/gif_app_3.gif)
 
 A Flutter Navigator 2.0 project inspired from <a href="https://github.com/orestesgaolin/navigator_20_example">orestesgaolin's git</a> and <a href="https://medium.com/flutter/learning-flutters-new-navigation-and-routing-system-7c9068155ade">John Ryan's Medium</a><a href="https://docs.google.com/document/d/1Q0jx0l4-xymph9O6zLaOY4d_f7YFpNWX_eGbzYxr9wY/edit">.</a><br/>
