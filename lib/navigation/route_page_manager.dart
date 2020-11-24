@@ -42,60 +42,42 @@ class RoutePageManager extends ChangeNotifier {
   ];
 
   Future<void> setNewRoutePath(AppConfig config) async {
-    //print("setNewRoutePath");
-    //print("pagesKeysRequired()");
     List<Key> widgetToBuild = pagesKeysRequired(appConfig: config);
-    //print(widgetToBuild.toString());
-
-    //print("Begin pagesKeys()");
-    //print(pagesKeys().toString());
 
     // First Page, Handle "/" HomeScreen
     if (widgetToBuild.length >= 1) {
       if (_pages.length <= 0 || _pages[0].key != widgetToBuild[0]) {
-        if (!_pages.contains(widgetToBuild[0])) {
-          _pages.insert(
-            0,
-            MaterialPage(
-              child: HomeScreen(),
-              key: ValueKey(HomeScreen.getConfig().hashCode),
-              name: HomeScreen.getConfig().uri.path,
-            ),
-          );
-        } else {
-          List<Key> pageKeys = pagesKeys();
-          Page thePage = _pages.removeAt(pageKeys.indexOf(widgetToBuild[0]));
-          _pages.insert(0, thePage);
-        }
+        _pages.insert(
+          0,
+          MaterialPage(
+            child: HomeScreen(),
+            key: ValueKey(HomeScreen.getConfig().hashCode),
+            name: HomeScreen.getConfig().uri.path,
+          ),
+        );
       }
     }
 
     // Second Page, Handle "/todo" or "/unknown" TodosScreen or UnknownScreen
     if (widgetToBuild.length >= 2) {
       if (_pages.length <= 1 || _pages[1].key != widgetToBuild[1]) {
-        if (_pages.contains(widgetToBuild[1])) {
-          List<Key> pageKeys = pagesKeys();
-          Page thePage = _pages.removeAt(pageKeys.indexOf(widgetToBuild[1]));
-          _pages.insert(1, thePage);
-        } else {
-          if (widgetToBuild[1] == ValueKey(TodosScreen.getConfig().hashCode)) {
-            _pages.insert(
-              1,
-              MaterialPage(
-                  key: ValueKey(TodosScreen.getConfig().hashCode),
-                  child: TodosScreen(),
-                  name: TodosScreen.getConfig().uri.path),
-            );
-          } else if (widgetToBuild[1] ==
-              ValueKey(UnknownScreen.getConfig().hashCode)) {
-            _pages.insert(
-              1,
-              MaterialPage(
-                  key: ValueKey(UnknownScreen.getConfig.hashCode),
-                  child: UnknownScreen(),
-                  name: UnknownScreen.getConfig().uri.path),
-            );
-          }
+        if (widgetToBuild[1] == ValueKey(TodosScreen.getConfig().hashCode)) {
+          _pages.insert(
+            1,
+            MaterialPage(
+                key: ValueKey(TodosScreen.getConfig().hashCode),
+                child: TodosScreen(),
+                name: TodosScreen.getConfig().uri.path),
+          );
+        } else if (widgetToBuild[1] ==
+            ValueKey(UnknownScreen.getConfig().hashCode)) {
+          _pages.insert(
+            1,
+            MaterialPage(
+                key: ValueKey(UnknownScreen.getConfig.hashCode),
+                child: UnknownScreen(),
+                name: UnknownScreen.getConfig().uri.path),
+          );
         }
       }
     }
@@ -103,23 +85,17 @@ class RoutePageManager extends ChangeNotifier {
     // Third Page, Handle "/todo/:id" TodoDetailsScreen
     if (widgetToBuild.length >= 3) {
       if (_pages.length <= 2 || _pages[2].key != widgetToBuild[2]) {
-        if (_pages.contains(widgetToBuild[2])) {
-          List<Key> pageKeys = pagesKeys();
-          Page thePage = _pages.removeAt(pageKeys.indexOf(widgetToBuild[2]));
-          _pages.insert(2, thePage);
-        } else {
-          TodoDetailsScreen todoDetailsScreen = TodoDetailsScreen(
-            todo: config.selectedTodo,
-          );
-          _pages.insert(
-            2,
-            MaterialPage(
-              child: todoDetailsScreen,
-              key: ValueKey(todoDetailsScreen.getConfig().hashCode),
-              name: todoDetailsScreen.getConfig().uri.path,
-            ),
-          );
-        }
+        TodoDetailsScreen todoDetailsScreen = TodoDetailsScreen(
+          todo: config.selectedTodo,
+        );
+        _pages.insert(
+          2,
+          MaterialPage(
+            child: todoDetailsScreen,
+            key: ValueKey(todoDetailsScreen.getConfig().hashCode),
+            name: todoDetailsScreen.getConfig().uri.path,
+          ),
+        );
       }
     }
     while (_pages.length > widgetToBuild.length) {
