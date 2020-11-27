@@ -120,14 +120,6 @@ class RoutePageManager extends ChangeNotifier {
     return new List.from(keys.reversed);
   }
 
-  List<Key> pagesKeys() {
-    List<Key> keys = <Key>[];
-    for (Page aPage in _pages) {
-      keys.add(aPage.key);
-    }
-    return keys;
-  }
-
   void openTodosScreen() {
     setNewRoutePath(TodosScreen.getConfig());
   }
