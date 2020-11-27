@@ -20,9 +20,14 @@ class RoutePageManager extends ChangeNotifier {
     ),
   ];
 
+  final List<Page> _savedPages = []; // To keep poped pages
+
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   void didPop(Page page) {
+    if (indexPageInPages(page: page, pages: _savedPages) == null) {
+      _savedPages.add(page);
+    }
     _pages.remove(page);
     notifyListeners();
   }
@@ -44,40 +49,40 @@ class RoutePageManager extends ChangeNotifier {
   Future<void> setNewRoutePath(AppConfig config) async {
     List<Key> widgetToBuild = pagesKeysRequired(appConfig: config);
 
+    print("----------Begin----------");
+    print("widgetToBuild : " + widgetToBuild.toString());
+    print("_pages : " + _pages.toString());
+    print("_savedPages : " + _savedPages.toString());
+    print("--------------------");
+
     // First Page, Handle "/" HomeScreen
     if (widgetToBuild.length >= 1) {
       if (_pages.length <= 0 || _pages[0].key != widgetToBuild[0]) {
-        _pages.insert(
-          0,
-          MaterialPage(
-            child: HomeScreen(),
+        addOrGetPageToPages(
+            indexInsert: 0,
             key: ValueKey(HomeScreen.getConfig().hashCode),
-            name: HomeScreen.getConfig().uri.path,
-          ),
-        );
+            path: HomeScreen.getConfig().uri.path,
+            widget: HomeScreen());
       }
     }
 
     // Second Page, Handle "/todo" or "/unknown" TodosScreen or UnknownScreen
     if (widgetToBuild.length >= 2) {
       if (_pages.length <= 1 || _pages[1].key != widgetToBuild[1]) {
-        if (widgetToBuild[1] == ValueKey(TodosScreen.getConfig().hashCode)) {
-          _pages.insert(
-            1,
-            MaterialPage(
-                key: ValueKey(TodosScreen.getConfig().hashCode),
-                child: TodosScreen(),
-                name: TodosScreen.getConfig().uri.path),
-          );
-        } else if (widgetToBuild[1] ==
-            ValueKey(UnknownScreen.getConfig().hashCode)) {
-          _pages.insert(
-            1,
-            MaterialPage(
-                key: ValueKey(UnknownScreen.getConfig.hashCode),
-                child: UnknownScreen(),
-                name: UnknownScreen.getConfig().uri.path),
-          );
+        Key unknownScreenKey = ValueKey(UnknownScreen.getConfig().hashCode);
+        Key todosScreenKey = ValueKey(TodosScreen.getConfig().hashCode);
+        if (widgetToBuild[1] == todosScreenKey) {
+          addOrGetPageToPages(
+              indexInsert: 1,
+              key: todosScreenKey,
+              path: TodosScreen.getConfig().uri.path,
+              widget: TodosScreen());
+        } else if (widgetToBuild[1] == unknownScreenKey) {
+          addOrGetPageToPages(
+              indexInsert: 1,
+              key: unknownScreenKey,
+              path: UnknownScreen.getConfig().uri.path,
+              widget: UnknownScreen());
         }
       }
     }
@@ -88,19 +93,27 @@ class RoutePageManager extends ChangeNotifier {
         TodoDetailsScreen todoDetailsScreen = TodoDetailsScreen(
           todo: config.selectedTodo,
         );
-        _pages.insert(
-          2,
-          MaterialPage(
-            child: todoDetailsScreen,
+        addOrGetPageToPages(
+            indexInsert: 2,
             key: ValueKey(todoDetailsScreen.getConfig().hashCode),
-            name: todoDetailsScreen.getConfig().uri.path,
-          ),
-        );
+            path: todoDetailsScreen.getConfig().uri.path,
+            widget: todoDetailsScreen);
       }
     }
+
     while (_pages.length > widgetToBuild.length) {
-      _pages.removeLast();
+      Page lastPage = _pages.removeLast();
+      if (indexPageInPages(page: lastPage, pages: _savedPages) == null) {
+        _savedPages.add(lastPage);
+      }
     }
+
+    print("----------End----------");
+    print("widgetToBuild : " + widgetToBuild.toString());
+    print("_pages : " + _pages.toString());
+    print("_savedPages : " + _savedPages.toString());
+    print("--------------------");
+
     notifyListeners();
     return;
   }
@@ -120,12 +133,34 @@ class RoutePageManager extends ChangeNotifier {
     return new List.from(keys.reversed);
   }
 
-  List<Key> pagesKeys() {
-    List<Key> keys = <Key>[];
-    for (Page aPage in _pages) {
-      keys.add(aPage.key);
+  int indexPageInPages({Page page, Key pageKey, @required List<Page> pages}) {
+    assert(
+        (page == null && pageKey != null) || (page != null && pageKey == null));
+    for (int i = 0; i < pages.length; i++) {
+      Page pageOfPages = pages[i];
+      if ((page?.key ?? pageKey) == pageOfPages.key) {
+        return i;
+      }
     }
-    return keys;
+    return null;
+  }
+
+  void addOrGetPageToPages(
+      {@required int indexInsert,
+      @required Key key,
+      @required String path,
+      @required Widget widget}) {
+    int indexPageInSavedPages =
+        indexPageInPages(pageKey: key, pages: _savedPages);
+    if (indexPageInSavedPages != null) {
+      _pages.insert(indexInsert, _savedPages[indexPageInSavedPages]);
+      _savedPages.removeAt(indexPageInSavedPages);
+    } else {
+      _pages.insert(
+        indexInsert,
+        MaterialPage(key: key, child: widget, name: path),
+      );
+    }
   }
 
   void openTodosScreen() {

@@ -30,7 +30,7 @@ class AppConfig extends Equatable {
   }
 
   @override
-  List<Object> get props => [uri, selectedTodo];
+  List<Object> get props => [uri.path];
   // widgetBelow should not be inside props
 }
 
